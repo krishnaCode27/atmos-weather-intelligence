@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: atmos-weather-backend
+    env: python
+    plan: free
+    region: oregon
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.14.3"
+      # Set this to your Netlify URL so CORS allows the frontend.
+      # Comma-separate to allow multiple origins.
+      - key: FRONTEND_URL
+        sync: false
